@@ -73,6 +73,10 @@ public class Nasabah implements Serializable {
         this.nik = nik;
     }
 
+    public Nasabah(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat, String status, String penghasilan, String idAdmin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getNik() {
         return nik;
     }
