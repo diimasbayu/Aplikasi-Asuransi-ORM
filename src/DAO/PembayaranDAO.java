@@ -5,10 +5,54 @@
  */
 package DAO;
 
+import entitites.Pembayaran;
+import entitites.Polis;
+import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 /**
  *
  * @author dbayu
  */
-public class PembayaranDAO {
+public class PembayaranDAO implements InterfaceDAO{
+
+        public Session session;
+    private SessionFactory factory;
+    public Transaction transaction;
+    
+        public FunctionDAO fdao;
+
+    @Override
+    public boolean insert(Object object) {
+         return fdao.insert(object);
+       
+    }
+
+    @Override
+    public boolean update(Object object) {
+        return fdao.insert(object);
+    }
+
+    @Override
+    public boolean delete(Object object) {
+    return fdao.delete(Pembayaran.class, object + "");
+    }
+
+    @Override
+    public List<Object> getAll() {
+    return fdao.getAll("FROM Pembayaran");
+    }
+
+    @Override
+    public List<Object> search(String category, String search) {
+    return fdao.getAll("FROM Pembayaran WHERE " + category + " LIKE '%" + search + "%'"); 
+    }
+
+    @Override
+    public Object getById(String id) {
+    return fdao.getById("from Pembayaran where noPembayaran='" + id + "'");
+    }
     
 }

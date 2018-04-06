@@ -5,25 +5,55 @@
  */
 package DAO;
 
+import entitites.Polis;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import tools.HibernateUtil;
 
 /**
  *
  * @author dbayu
  */
-public class PolisDAO {
+public class PolisDAO implements InterfaceDAO{
     
     public Session session;
     private SessionFactory factory;
     public Transaction transaction;
     
-    public PolisDAO pdao;
+    public FunctionDAO fdao;
 
  public PolisDAO(){
-//     this.pdao = new 
+     this.fdao = new FunctionDAO(HibernateUtil.getSessionFactory());
  }
 
+ public List<Object> search(String category, String search) {
+        return fdao.getAll("FROM Polis WHERE " + category + " LIKE '%" + search + "%'");
+    }
+
+    public Object getById(String Id) {
+        return fdao.getById("from Polis where noPolis='" + Id + "'");
+    }
+ 
+ public boolean update(Object object) {
+        return fdao.insert(object);
+    }
+
+    public List<Object> getAll() {
+        return fdao.getAll("FROM Polis");
+    }
+
+    @Override
+    public boolean insert(Object object) {
+         //To change body of generated methods, choose Tools | Templates.
+     return fdao.insert(object);
+    }
+
+    @Override
+    public boolean delete(Object object) {
+            return fdao.delete(Polis.class, object + "");
+
+    }
     
 }
