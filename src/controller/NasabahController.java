@@ -7,12 +7,12 @@ package controller;
 
 import DAO.AdminDAO;
 import DAO.NasabahDAO;
-import entitites.Admin;
-import entitites.Nasabah;
+import entities.Nasabah;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,11 +22,9 @@ import javax.swing.table.DefaultTableModel;
 public class NasabahController {
 
     private final NasabahDAO nao;
-    private final AdminDAO adao;
 
     public NasabahController() {
         this.nao = new NasabahDAO();
-        this.adao = new AdminDAO();
     }
 
     public void BindingAll(JTable table, String[] header) {
@@ -44,14 +42,13 @@ public class NasabahController {
                 n.getPekerjaan(),
                 n.getAlamat(),
                 n.getStatus(),
-                n.getStatus(),
                 n.getPengBulan(),
-                n.getIdAdmin(),};
+                n.getIdAdmin()};
             model.addRow(data1);
         }
         table.setModel(model);
     }
-
+    
     public boolean insert(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
             String status, String penghasilan, String idAdmin) {
 
@@ -71,10 +68,14 @@ public class NasabahController {
     }
 
     public void bindingsearch(JTable table, String[] header, String category, String search) {
-        BindingTabels(table, header, adao.search(category, search));
+        BindingTabels(table, header, nao.search(category, search));
     }
 
     public void bindingall(JTable table, String[] header) {
-        BindingTabels(table, header, adao.getAll());
+        BindingTabels(table, header, nao.getAll());
+    }
+
+    public boolean update(String text, String text0, String text1, String text2, String name, String text3, String text4, JTextField txtIDAdmin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

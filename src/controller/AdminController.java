@@ -6,7 +6,7 @@
 package controller;
 
 import DAO.AdminDAO;
-import entitites.Admin;
+import entities.Admin;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -17,52 +17,57 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdminController {
 
-    private final AdminDAO adao;
-
-    public AdminController() {
-        this.adao = new AdminDAO();
-    }
-
-    private void bindingTabels(JTable table, String[] header, List<Object> datas) {
-        DefaultTableModel model = new DefaultTableModel(header, 0);
-
+    public AdminDAO adao= new AdminDAO();
+    
+    private void bindingTabels(JTable table, String[] header, List<Object> datas){
+    DefaultTableModel model = new  DefaultTableModel(header, 0);
+        
         for (Object data : datas) {
-            Admin admin = (Admin) data;
+            Admin a = (Admin) data;
             Object[] data1 = {
-                admin.getIdAdmin(),
-                admin.getNamaAdmin(),
-                admin.getAlamat(),
-                admin.getIdAdmin()
+                a.getIdAdmin(),a.getNamaAdmin(), a.getAlamat(), a.getNoTelp(), a.getEmail()
+ 
             };
             model.addRow(data1);
         }
         table.setModel(model);
     }
 
-    public void bindingall(JTable table, String[] header) {
+     public void bindingall(JTable table, String[] header){
         bindingTabels(table, header, adao.getAll());
     }
-
-    public boolean insert(String idAdmin, String nmAdmin, String alamat, String email) {
-
-        Admin a = new Admin(idAdmin, nmAdmin, alamat, email);
+     
+     public boolean insert(String idAdmin, String nmAdmin, String Alamat, String noTelp, String email){
+        Admin a = new Admin();
+        a.setIdAdmin(idAdmin);
+        a.setNamaAdmin(nmAdmin);
+        a.setAlamat(Alamat);
+        a.setNoTelp(noTelp);
+        a.setEmail(email);
+ 
+        
         return adao.insert(a);
     }
-
-    public boolean delete(String id) {
+     
+     public boolean delete(String id) {
         return adao.delete(id);
     }
-
-    public boolean update(String idAdmin, String nmAdmin, String alamat, String email) {
-
-        Admin a = new Admin(idAdmin, nmAdmin, alamat, email);
+     
+     public boolean update(String idAdmin, String nmAdmin, String Alamat, String noTelp, String email){
+         Admin a = new Admin();
+        a.setIdAdmin(idAdmin);
+        a.setNamaAdmin(nmAdmin);
+        a.setAlamat(Alamat);
+        a.setNoTelp(noTelp);
+        a.setEmail(email);
+ 
+        
         return adao.update(a);
-    }
-
-    public void bindingsearch(JTable table, String[] header,
-            String category, String search) {
+    
+}
+     public  void bindingsearch(JTable table, String[] header,
+            String category, String search){
         bindingTabels(table, header, adao.search(category, search));
-
+        
     }
-
 }

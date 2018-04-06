@@ -5,8 +5,7 @@
  */
 package DAO;
 
-import entitites.Pembayaran;
-import entitites.Polis;
+import entities.Pembayaran;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -72,8 +72,7 @@ public class FunctionDAO {
             session = factory.openSession();
             transaction = session.beginTransaction();
             data = session
-                    .createQuery(query)
-                    .list();
+                    .createQuery(query).list();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

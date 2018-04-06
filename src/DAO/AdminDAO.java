@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import entitites.Admin;
+import entities.Admin;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,8 +19,6 @@ import tools.HibernateUtil;
 
 public class AdminDAO implements InterfaceDAO {
 
-    public Session session;
-    private SessionFactory factory;
     public Transaction transaction;
 
     public FunctionDAO fdao;
@@ -46,7 +44,7 @@ public class AdminDAO implements InterfaceDAO {
 
     @Override
     public List<Object> getAll() {
-        return fdao.getAll("FROM Admin");
+        return fdao.getAll(" FROM Admin");
     }
 
     @Override

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entitites;
+package entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dbayu
+ * @author Toshiba
  */
 @Entity
 @Table(name = "ADMIN")
@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Admin.findByIdAdmin", query = "SELECT a FROM Admin a WHERE a.idAdmin = :idAdmin")
     , @NamedQuery(name = "Admin.findByNamaAdmin", query = "SELECT a FROM Admin a WHERE a.namaAdmin = :namaAdmin")
     , @NamedQuery(name = "Admin.findByNoTelp", query = "SELECT a FROM Admin a WHERE a.noTelp = :noTelp")
-    , @NamedQuery(name = "Admin.findByEmail", query = "SELECT a FROM Admin a WHERE a.email = :email")})
+    , @NamedQuery(name = "Admin.findByEmail", query = "SELECT a FROM Admin a WHERE a.email = :email")
+    , @NamedQuery(name = "Admin.findByAlamat", query = "SELECT a FROM Admin a WHERE a.alamat = :alamat")})
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,12 +42,12 @@ public class Admin implements Serializable {
     private String idAdmin;
     @Column(name = "NAMA_ADMIN")
     private String namaAdmin;
-    @Column(name = "Alamat")
-    private String Alamat;
     @Column(name = "NO_TELP")
     private String noTelp;
     @Column(name = "EMAIL")
     private String email;
+    @Column(name = "ALAMAT")
+    private String alamat;
     @OneToMany(mappedBy = "idAdmin", fetch = FetchType.LAZY)
     private List<Nasabah> nasabahList;
 
@@ -55,10 +56,6 @@ public class Admin implements Serializable {
 
     public Admin(String idAdmin) {
         this.idAdmin = idAdmin;
-    }
-
-    public Admin(String idAdmin, String nmAdmin, String alamat, String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getIdAdmin() {
@@ -76,13 +73,6 @@ public class Admin implements Serializable {
     public void setNamaAdmin(String namaAdmin) {
         this.namaAdmin = namaAdmin;
     }
-    public String getAlamat() {
-        return Alamat;
-    }
-
-    public void setAlamat(String Alamat) {
-        this.Alamat = Alamat;
-    }
 
     public String getNoTelp() {
         return noTelp;
@@ -98,6 +88,14 @@ public class Admin implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 
     @XmlTransient
@@ -131,7 +129,7 @@ public class Admin implements Serializable {
 
     @Override
     public String toString() {
-        return "entitites.Admin[ idAdmin=" + idAdmin + " ]";
+        return "entities.Admin[ idAdmin=" + idAdmin + " ]";
     }
     
 }

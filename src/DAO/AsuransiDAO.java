@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import entitites.Asuransi;
+import entities.Asuransi;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

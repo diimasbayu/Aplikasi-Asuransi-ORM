@@ -45,14 +45,15 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
     <property name="hibernate.connection.username">system</property>
-    <property name="hibernate.connection.password">root</property>
+    <property name="hibernate.connection.password">rini260595</property>
     <property name="hibernate.default_schema">hr</property>
     <property name="hibernate.connection.autocommit">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping class="entitites.Admin"/>
-    <mapping class="entitites.Asuransi"/>
-    <mapping class="entitites.Nasabah"/>
-    <mapping class="entitites.Pembayaran"/>
-    <mapping class="entitites.Polis"/>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <mapping class="entities.Admin"/>
+    <mapping class="entities.Asuransi"/>
+    <mapping class="entities.Nasabah"/>
+    <mapping class="entities.Pembayaran"/>
+    <mapping class="entities.Polis"/>
   </session-factory>
 </hibernate-configuration>

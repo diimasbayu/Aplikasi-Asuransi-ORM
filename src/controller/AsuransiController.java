@@ -6,7 +6,7 @@
 package controller;
 
 import DAO.AsuransiDAO;
-import entitites.Asuransi;
+import entities.Asuransi;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;

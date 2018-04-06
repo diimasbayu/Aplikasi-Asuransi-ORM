@@ -5,9 +5,10 @@
  */
 package DAO;
 
-import entitites.Nasabah;
+import entities.Nasabah;
 import java.util.List;
 import org.hibernate.Transaction;
+import tools.HibernateUtil;
 
 /**
  *
@@ -18,6 +19,11 @@ public class NasabahDAO implements InterfaceDAO{
     public Transaction transaction;
     
         public FunctionDAO fdao;
+
+    public NasabahDAO() {
+        this.fdao = new FunctionDAO(HibernateUtil.getSessionFactory());
+    }
+        
     @Override
     public boolean insert(Object object) {
         return fdao.insert(object);
