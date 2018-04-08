@@ -7,6 +7,7 @@ package controller;
 
 import DAO.AdminDAO;
 import DAO.NasabahDAO;
+import entities.Admin;
 import entities.Nasabah;
 import java.util.Date;
 import java.util.List;
@@ -43,24 +44,45 @@ public class NasabahController {
                 n.getAlamat(),
                 n.getStatus(),
                 n.getPengBulan(),
+                n.getNoPolis(),
                 n.getIdAdmin()};
             model.addRow(data1);
         }
         table.setModel(model);
     }
-    
-    public boolean insert(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
-            String status, String penghasilan, String idAdmin) {
 
-        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, idAdmin);
-        return nao.insert(nasabah);
+    public boolean insert(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
+            String status, String penghasilan, String noPolis, String idAdmin) {
+//        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, noPolis, idAdmin);
+        Nasabah n = new Nasabah();
+        n.setNik(NIK);
+        n.setNmNasabah(nmNasabah);
+        n.setTglLahir(new java.sql.Date(new Long(tglLahir)));
+        n.setPekerjaan(pekerjaan);
+        n.setAlamat(alamat);
+        n.setStatus(status);
+        n.setPengBulan(penghasilan);
+        n.setNoPolis(noPolis);
+        n.setIdAdmin(new Admin(idAdmin));
+
+        return nao.insert(n);
     }
 
     public boolean update(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
-            String status, String penghasilan, String idAdmin) {
+            String status, String penghasilan, String noPolis, String idAdmin) {
+         Nasabah n = new Nasabah();
+        n.setNik(NIK);
+        n.setNmNasabah(nmNasabah);
+        n.setTglLahir(new java.sql.Date(new Long(tglLahir)));
+        n.setPekerjaan(pekerjaan);
+        n.setAlamat(alamat);
+        n.setStatus(status);
+        n.setPengBulan(penghasilan);
+        n.setNoPolis(noPolis);
+        n.setIdAdmin(new Admin(idAdmin));
 
-        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, idAdmin);
-        return nao.update(nasabah);
+//        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, noPolis, idAdmin);
+        return nao.update(n);
     }
 
     public boolean delete(String id) {

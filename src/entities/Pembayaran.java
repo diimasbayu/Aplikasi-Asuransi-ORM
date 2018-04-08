@@ -50,7 +50,7 @@ public class Pembayaran implements Serializable {
     private Asuransi kodeAsuransi;
     @JoinColumn(name = "NO_POLIS", referencedColumnName = "NO_POLIS")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Polis noPolis;
+    private Nasabah noPolis;
 
     public Pembayaran() {
     }
@@ -91,11 +91,11 @@ public class Pembayaran implements Serializable {
         this.kodeAsuransi = kodeAsuransi;
     }
 
-    public Polis getNoPolis() {
+    public Nasabah getNoPolis() {
         return noPolis;
     }
 
-    public void setNoPolis(Polis noPolis) {
+    public void setNoPolis(Nasabah noPolis) {
         this.noPolis = noPolis;
     }
 
