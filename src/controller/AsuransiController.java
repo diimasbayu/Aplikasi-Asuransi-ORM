@@ -51,7 +51,7 @@ private void bindingTabels(JTable table, String[] header, List<Object> datas){
     public boolean update(String kode_asuransi, String jenis_asuransi){
         Asuransi asuransi = new Asuransi();
         asuransi.setKodeAsuransi(kode_asuransi);
-        asuransi.setJenisAsuransi(kode_asuransi);
+        asuransi.setJenisAsuransi(jenis_asuransi);
         
                 
         return adao.update(asuransi);

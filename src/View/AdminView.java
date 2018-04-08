@@ -25,6 +25,7 @@ public class AdminView extends javax.swing.JInternalFrame {
         ac = new AdminController();
         ac.bindingall(tblAdmin, header);
         reset();
+        
       }
 
     /**
@@ -241,7 +242,7 @@ public class AdminView extends javax.swing.JInternalFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
        boolean hasil = false;
         if (!txtId.isEnabled()) {
-            hasil = ac.update(txtId.getText(), txtNama.getText(), txtAlamat.getName(), 
+            hasil = ac.update(txtId.getText(), txtNama.getText(), txtAlamat.getText(), 
                     txtNoTelp.getText(), txtEmail.getText());
               
         } else {
@@ -273,24 +274,20 @@ public class AdminView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void tblAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAdminMouseClicked
-      txtId.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 0).toString());
-      txtNama.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 1).toString());
-      txtAlamat.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 2).toString());
-      txtNoTelp.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 3).toString());
-      txtEmail.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 4).toString());
+      txtId.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 0)+"");
+      txtNama.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 1)+"");
+      txtAlamat.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 2)+"");
+      txtNoTelp.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 3)+"");
+      txtEmail.setText(tblAdmin.getValueAt(tblAdmin.getSelectedRow(), 4)+"");
        
         txtId.setEnabled(false);
-        txtNama.setEnabled(true);
-        txtAlamat.setEnabled(true);
-        txtNoTelp.setEnabled(true);
-        txtEmail.setEnabled(true);
         btnSave.setEnabled(true);
         btnHapus.setEnabled(true);
     }//GEN-LAST:event_tblAdminMouseClicked
 
     private void txtIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyPressed
          // TODO add your handling code here:
-         btnHapus.setEnabled(true);
+         
          btnSave.setEnabled(true);
     }//GEN-LAST:event_txtIdKeyPressed
 
@@ -321,8 +318,13 @@ public class AdminView extends javax.swing.JInternalFrame {
         txtAlamat.setText("");
         txtNoTelp.setText("");
         txtEmail.setText("");
+        txtId.setEnabled(true);
         cmbAdmin.setSelectedItem(0);
-        btnSave.setEnabled(false);
         btnHapus.setEnabled(false);
+        btnSave.setEnabled(false);
+    }
+    
+    public void autonumber(){
+
     }
 }

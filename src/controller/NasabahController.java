@@ -50,16 +50,16 @@ public class NasabahController {
     }
     
     public boolean insert(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
-            String status, String penghasilan, String idAdmin) {
+            String status, String penghasilan, String idAdmin, String no_polis) {
 
-        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, idAdmin);
+        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, idAdmin, no_polis);
         return nao.insert(nasabah);
     }
 
     public boolean update(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
-            String status, String penghasilan, String idAdmin) {
+            String status, String penghasilan, String idAdmin, String no_polis) {
 
-        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, idAdmin);
+        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, idAdmin, no_polis);
         return nao.update(nasabah);
     }
 

@@ -6,6 +6,7 @@
 package View;
 
 import controller.AsuransiController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,11 +20,11 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
     
     
     void reset(){
-        btn_delete.setEnabled(false);
-        btn_save.setEnabled(false);
         txt_jenisasuransi.setText("");
         txt_kodeasuransi.setText("");
         txt_kodeasuransi.setEnabled(true);
+        btn_save.setEnabled(false);
+        btn_delete.setEnabled(false);
     }
     /**
      * Creates new form ViewAsuransi
@@ -31,7 +32,7 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
     public ViewAsuransi() {
         initComponents();
         ac = new AsuransiController();
-        ac.bindingall(jTable1, header);
+        ac.bindingall(tbl_asuransi, header);
     }
 
     /**
@@ -44,7 +45,7 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_asuransi = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -56,7 +57,7 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         txt_search = new javax.swing.JTextField();
         cmb_search = new javax.swing.JComboBox<>();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_asuransi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -67,15 +68,36 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbl_asuransi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_asuransiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_asuransi);
 
         jLabel1.setText("Kode Asuransi  :");
 
         jLabel2.setText("Jenis Asuransi  :");
 
+        txt_kodeasuransi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_kodeasuransiKeyPressed(evt);
+            }
+        });
+
         btn_save.setText("Simpan");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
         btn_delete.setText("Hapus");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,6 +135,11 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         );
 
         btn_search.setText("Cari");
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
 
         cmb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kode Asuransi", "Jenis Asuransi" }));
 
@@ -152,6 +179,74 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        // TODO add your handling code here:
+         boolean hasil = false;
+        if (!txt_kodeasuransi.isEnabled()) {
+            hasil = ac.update(
+                    txt_kodeasuransi.getText(),
+                    txt_jenisasuransi.getText());
+        } else {
+            hasil = ac.insert(
+                    txt_kodeasuransi.getText(),
+                    txt_jenisasuransi.getText());
+        }
+        String pesan = "gagal menginputkan data";
+        if (hasil) {
+            pesan = "berhasil menginputkan data";
+        }
+        JOptionPane.showMessageDialog(this, pesan);
+        reset();
+        ac.bindingall(tbl_asuransi, header);
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void tbl_asuransiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_asuransiMouseClicked
+         // TODO add your handling code here:
+         txt_kodeasuransi.setText(tbl_asuransi.getValueAt(tbl_asuransi.getSelectedRow(), 0).toString());
+        txt_jenisasuransi.setText(tbl_asuransi.getValueAt(tbl_asuransi.getSelectedRow(), 1).toString());
+        txt_kodeasuransi.setEnabled(false);
+        btn_save.setEnabled(true);
+        btn_delete.setEnabled(true);
+    }//GEN-LAST:event_tbl_asuransiMouseClicked
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        // TODO add your handling code here:
+        int i = JOptionPane.showConfirmDialog(this, "Apakah Anda Yakin Ingin dihapus?");
+        if (i == 0) {
+            String pesan = "Gagal hapus";
+            boolean hasil = ac.delete(txt_kodeasuransi.getText());
+            if (hasil) {
+                pesan = "Hore Berhasil";
+            }
+            JOptionPane.showMessageDialog(this, pesan);
+            ac.bindingall(tbl_asuransi, header);
+
+        }
+        reset();
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        // TODO add your handling code here:
+        String kolom = "";
+        switch (cmb_search.getSelectedIndex()) {
+            case 0:
+                kolom = "kodeAsuransi";
+                break;
+            case 1:
+                kolom = "jenisAsuransi";
+                break;
+            default:
+                throw new AssertionError();
+        }
+        ac.bindingsearch(tbl_asuransi, header, kolom,
+                txt_search.getText());
+    }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void txt_kodeasuransiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kodeasuransiKeyPressed
+        // TODO add your handling code here:
+        btn_save.setEnabled(true);
+    }//GEN-LAST:event_txt_kodeasuransiKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_delete;
@@ -162,7 +257,7 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbl_asuransi;
     private javax.swing.JTextField txt_jenisasuransi;
     private javax.swing.JTextField txt_kodeasuransi;
     private javax.swing.JTextField txt_search;

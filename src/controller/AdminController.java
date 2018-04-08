@@ -70,4 +70,5 @@ public class AdminController {
         bindingTabels(table, header, adao.search(category, search));
         
     }
+     
 }

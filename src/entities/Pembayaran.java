@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Toshiba
+ * @author dbayu
  */
 @Entity
 @Table(name = "PEMBAYARAN")
@@ -50,13 +50,21 @@ public class Pembayaran implements Serializable {
     private Asuransi kodeAsuransi;
     @JoinColumn(name = "NO_POLIS", referencedColumnName = "NO_POLIS")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Polis noPolis;
+    private Nasabah noPolis;
 
     public Pembayaran() {
     }
 
     public Pembayaran(String noPembayaran) {
         this.noPembayaran = noPembayaran;
+    }
+
+    public Pembayaran(String no_pembayaran, String tgl_pembayaran, String jml_bayar, String kode_asuransi, String no_polis) {
+    this.noPembayaran = no_pembayaran;
+    this.tglPembayaran = tglPembayaran;
+    this.jmlhBayar = jmlhBayar;
+    this.kodeAsuransi = kodeAsuransi;
+    this.noPolis = noPolis;
     }
 
     public String getNoPembayaran() {
@@ -91,11 +99,11 @@ public class Pembayaran implements Serializable {
         this.kodeAsuransi = kodeAsuransi;
     }
 
-    public Polis getNoPolis() {
+    public Nasabah getNoPolis() {
         return noPolis;
     }
 
-    public void setNoPolis(Polis noPolis) {
+    public void setNoPolis(Nasabah noPolis) {
         this.noPolis = noPolis;
     }
 

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Toshiba
+ * @author dbayu
  */
 @Entity
 @Table(name = "NASABAH")
@@ -39,12 +39,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Nasabah.findByPekerjaan", query = "SELECT n FROM Nasabah n WHERE n.pekerjaan = :pekerjaan")
     , @NamedQuery(name = "Nasabah.findByAlamat", query = "SELECT n FROM Nasabah n WHERE n.alamat = :alamat")
     , @NamedQuery(name = "Nasabah.findByStatus", query = "SELECT n FROM Nasabah n WHERE n.status = :status")
-    , @NamedQuery(name = "Nasabah.findByPengBulan", query = "SELECT n FROM Nasabah n WHERE n.pengBulan = :pengBulan")})
+    , @NamedQuery(name = "Nasabah.findByPengBulan", query = "SELECT n FROM Nasabah n WHERE n.pengBulan = :pengBulan")
+    , @NamedQuery(name = "Nasabah.findByNoPolis", query = "SELECT n FROM Nasabah n WHERE n.noPolis = :noPolis")})
 public class Nasabah implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
     @Column(name = "NIK")
     private String nik;
     @Column(name = "NM_NASABAH")
@@ -60,20 +59,24 @@ public class Nasabah implements Serializable {
     private String status;
     @Column(name = "PENG_BULAN")
     private String pengBulan;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "NO_POLIS")
+    private String noPolis;
     @JoinColumn(name = "ID_ADMIN", referencedColumnName = "ID_ADMIN")
     @ManyToOne(fetch = FetchType.LAZY)
     private Admin idAdmin;
-    @OneToMany(mappedBy = "nik", fetch = FetchType.LAZY)
-    private List<Polis> polisList;
+    @OneToMany(mappedBy = "noPolis", fetch = FetchType.LAZY)
+    private List<Pembayaran> pembayaranList;
 
     public Nasabah() {
     }
 
-    public Nasabah(String nik) {
-        this.nik = nik;
+    public Nasabah(String noPolis) {
+        this.noPolis = noPolis;
     }
 
-    public Nasabah(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat, String status, String penghasilan, String idAdmin) {
+    public Nasabah(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat, String status, String penghasilan, String idAdmin, String no_polis) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -133,6 +136,14 @@ public class Nasabah implements Serializable {
         this.pengBulan = pengBulan;
     }
 
+    public String getNoPolis() {
+        return noPolis;
+    }
+
+    public void setNoPolis(String noPolis) {
+        this.noPolis = noPolis;
+    }
+
     public Admin getIdAdmin() {
         return idAdmin;
     }
@@ -142,18 +153,18 @@ public class Nasabah implements Serializable {
     }
 
     @XmlTransient
-    public List<Polis> getPolisList() {
-        return polisList;
+    public List<Pembayaran> getPembayaranList() {
+        return pembayaranList;
     }
 
-    public void setPolisList(List<Polis> polisList) {
-        this.polisList = polisList;
+    public void setPembayaranList(List<Pembayaran> pembayaranList) {
+        this.pembayaranList = pembayaranList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (nik != null ? nik.hashCode() : 0);
+        hash += (noPolis != null ? noPolis.hashCode() : 0);
         return hash;
     }
 
@@ -164,7 +175,7 @@ public class Nasabah implements Serializable {
             return false;
         }
         Nasabah other = (Nasabah) object;
-        if ((this.nik == null && other.nik != null) || (this.nik != null && !this.nik.equals(other.nik))) {
+        if ((this.noPolis == null && other.noPolis != null) || (this.noPolis != null && !this.noPolis.equals(other.noPolis))) {
             return false;
         }
         return true;
@@ -172,7 +183,7 @@ public class Nasabah implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Nasabah[ nik=" + nik + " ]";
+        return "entities.Nasabah[ noPolis=" + noPolis + " ]";
     }
     
 }

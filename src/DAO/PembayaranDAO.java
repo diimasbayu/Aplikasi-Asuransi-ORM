@@ -5,10 +5,7 @@
  */
 package DAO;
 
-import entities.Pembayaran;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 /**
@@ -16,37 +13,33 @@ import org.hibernate.Transaction;
  * @author dbayu
  */
 public class PembayaranDAO implements InterfaceDAO{
-
-        public Session session;
-    private SessionFactory factory;
-    public Transaction transaction;
     
-        public FunctionDAO fdao;
+    public Transaction transaction;
+    public  FunctionDAO fdao;
 
     @Override
     public boolean insert(Object object) {
-         return fdao.insert(object);
-       
+     return fdao.insert(object);    
     }
 
     @Override
     public boolean update(Object object) {
-        return fdao.insert(object);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean delete(Object object) {
-    return fdao.delete(Pembayaran.class, object + "");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Object> getAll() {
-    return fdao.getAll("FROM Pembayaran");
+        return fdao.getAll(" from Pembayaran");
     }
 
     @Override
     public List<Object> search(String category, String search) {
-    return fdao.getAll("FROM Pembayaran WHERE " + category + " LIKE '%" + search + "%'"); 
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
