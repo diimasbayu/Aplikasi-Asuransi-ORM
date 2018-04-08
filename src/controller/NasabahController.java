@@ -23,9 +23,11 @@ import javax.swing.table.DefaultTableModel;
 public class NasabahController {
 
     private final NasabahDAO nao;
+    private final AdminDAO adao;
 
     public NasabahController() {
         this.nao = new NasabahDAO();
+        this.adao = new AdminDAO();
     }
 
     public void BindingAll(JTable table, String[] header) {
@@ -51,10 +53,11 @@ public class NasabahController {
         table.setModel(model);
     }
 
-    public boolean insert(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
-            String status, String penghasilan, String noPolis, String idAdmin) {
+    public boolean save(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
+            String status, String penghasilan, String noPolis, String idAdmin, boolean isSave) {
 //        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, noPolis, idAdmin);
         Nasabah n = new Nasabah();
+        String[] ID = idAdmin.split(" ");
         n.setNik(NIK);
         n.setNmNasabah(nmNasabah);
         n.setTglLahir(new java.sql.Date(new Long(tglLahir)));
@@ -63,28 +66,29 @@ public class NasabahController {
         n.setStatus(status);
         n.setPengBulan(penghasilan);
         n.setNoPolis(noPolis);
-        n.setIdAdmin(new Admin(idAdmin));
-
-        return nao.insert(n);
-    }
-
-    public boolean update(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
-            String status, String penghasilan, String noPolis, String idAdmin) {
-         Nasabah n = new Nasabah();
-        n.setNik(NIK);
-        n.setNmNasabah(nmNasabah);
-        n.setTglLahir(new java.sql.Date(new Long(tglLahir)));
-        n.setPekerjaan(pekerjaan);
-        n.setAlamat(alamat);
-        n.setStatus(status);
-        n.setPengBulan(penghasilan);
-        n.setNoPolis(noPolis);
-        n.setIdAdmin(new Admin(idAdmin));
-
-//        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, noPolis, idAdmin);
+        n.setIdAdmin((Admin) adao.getById(ID[0]));
+        if (isSave) {
+            return nao.insert(n);
+        }
         return nao.update(n);
     }
 
+//    public boolean update(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
+//            String status, String penghasilan, String noPolis, String idAdmin) {
+//         Nasabah n = new Nasabah();
+//        n.setNik(NIK);
+//        n.setNmNasabah(nmNasabah);
+//        n.setTglLahir(new java.sql.Date(new Long(tglLahir)));
+//        n.setPekerjaan(pekerjaan);
+//        n.setAlamat(alamat);
+//        n.setStatus(status);
+//        n.setPengBulan(penghasilan);
+//        n.setNoPolis(noPolis);
+//        n.setIdAdmin(new Admin(idAdmin));
+//
+////        Nasabah nasabah = new Nasabah(NIK, nmNasabah, tglLahir, pekerjaan, alamat, status, penghasilan, noPolis, idAdmin);
+//        return nao.update(n);
+//    }
     public boolean delete(String id) {
         return nao.delete(id);
     }
@@ -97,7 +101,10 @@ public class NasabahController {
         BindingTabels(table, header, nao.getAll());
     }
 
-    public boolean update(String text, String text0, String text1, String text2, String name, String text3, String text4, JTextField txtIDAdmin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void loadID(JComboBox jComboBox) {
+        adao.getAll().stream().map((object) -> (Admin) object).forEachOrdered((admin) -> {
+            jComboBox.addItem(admin.getIdAdmin() + " - "
+                    + admin.getNamaAdmin());
+        });
     }
 }

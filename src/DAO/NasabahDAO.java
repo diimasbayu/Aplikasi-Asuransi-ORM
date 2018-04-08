@@ -38,7 +38,7 @@ public class NasabahDAO implements InterfaceDAO{
     @Override
     public boolean delete(Object object) {
    
-        return fdao.delete(Nasabah.class, object+"");
+        return fdao.delete(Nasabah.class, object.toString());
     }
 
     @Override

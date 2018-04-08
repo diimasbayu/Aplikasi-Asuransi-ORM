@@ -27,6 +27,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
 
         nc = new NasabahController();
         nc.bindingall(tblNasabah, header);
+        nc.loadID(cmb_admin);
         reset();
     }
 
@@ -59,12 +60,12 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         txtAlamat = new javax.swing.JTextField();
         txtStatus = new javax.swing.JTextField();
         txtPenghasilan = new javax.swing.JTextField();
-        txtIDAdmin = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtNoPolis = new javax.swing.JTextField();
         tglChoser = new com.toedter.calendar.JDateChooser();
+        cmb_admin = new javax.swing.JComboBox<>();
 
         setTitle("Nasabah");
 
@@ -196,7 +197,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                                     .addComponent(txtStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                                     .addComponent(txtPenghasilan, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                                     .addComponent(txtNoPolis)
-                                    .addComponent(txtIDAdmin)))
+                                    .addComponent(cmb_admin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,13 +252,13 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txtIDAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmb_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(4, 4, 4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -286,7 +287,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                 kolom = "pengBulan";
                 break;
             case 5:
-                kolom = "No Polis";
+                kolom = "noPolis";
                 break;
             case 6:
                 kolom = "idAdmin";
@@ -300,16 +301,11 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         boolean hasil = false;
-        if (!txtNIK.isEnabled()) {
-            hasil = nc.update(txtNIK.getText(), txtNama.getText(), tglChoser.getDate().getTime()+"", 
+            hasil = nc.save(txtNIK.getText(), txtNama.getText(), tglChoser.getDate().getTime()+"", 
                     txtPekerjaan.getText(), txtAlamat.getText(), txtStatus.getText(), txtPenghasilan.getText(), 
-                    txtNoPolis.getText(), txtIDAdmin.getText());
+                    txtNoPolis.getText(), cmb_admin.getSelectedItem().toString(), txtNIK.isEnabled());
 
-        } else {
-            hasil = nc.update(txtNIK.getText(), txtNama.getText(), tglChoser.getDate().getTime()+"", 
-                    txtPekerjaan.getText(), txtAlamat.getText(), txtStatus.getText(), txtPenghasilan.getText(), 
-                    txtNoPolis.getText(), txtIDAdmin.getText());
-        }
+        
         String pesan = "gagal menginputkan data";
         if (hasil) {
             pesan = "berhasil menginputkan data";
@@ -335,15 +331,15 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void tblNasabahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNasabahMouseClicked
-        txtNIK.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 0).toString());
-        txtNama.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 1).toString());
-//        tglChoser.setDate(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 2));
-        txtPekerjaan.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 3).toString());
-        txtAlamat.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 4).toString());
-        txtStatus.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 5).toString());
-        txtPenghasilan.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 6).toString());
-        txtNoPolis.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 7).toString());
-        txtIDAdmin.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 8).toString());
+        txtNIK.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 0)+"");
+        txtNama.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 1)+"");
+        tglChoser.setDate((Date)tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 2));
+        txtPekerjaan.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 3)+"");
+        txtAlamat.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 4)+"");
+        txtStatus.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 5)+"");
+        txtPenghasilan.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 6)+"");
+        txtNoPolis.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 7)+"");
+       // txtIDAdmin.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 8)+"");
 
         txtNIK.setEnabled(false);
         txtNama.setEnabled(true);
@@ -353,7 +349,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         txtStatus.setEnabled(true);
         txtPenghasilan.setEnabled(true);
         txtNoPolis.setEnabled(true);
-        txtIDAdmin.setEnabled(true);
+      //  txtIDAdmin.setEnabled(true);
         
         btnSimpan.setEnabled(true);
         btnHapus.setEnabled(true);
@@ -371,6 +367,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JComboBox<String> cmbNasabah;
+    private javax.swing.JComboBox<String> cmb_admin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -386,7 +383,6 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser tglChoser;
     private javax.swing.JTextField txtAlamat;
     private javax.swing.JTextField txtCari;
-    private javax.swing.JTextField txtIDAdmin;
     private javax.swing.JTextField txtNIK;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNoPolis;
@@ -405,7 +401,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         txtStatus.setText("");
         txtPenghasilan.setText("");
         txtNoPolis.setText("");
-        txtIDAdmin.setText("");
+      //  txtIDAdmin.setText("");
         cmbNasabah.setSelectedItem(0);
 
         btnSimpan.setEnabled(false);
