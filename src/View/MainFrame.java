@@ -16,6 +16,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -50,16 +51,17 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem6.setText("jMenuItem6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplikasi Asuransi MII");
 
         javax.swing.GroupLayout mainpainLayout = new javax.swing.GroupLayout(mainpain);
         mainpain.setLayout(mainpainLayout);
         mainpainLayout.setHorizontalGroup(
             mainpainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGap(0, 726, Short.MAX_VALUE)
         );
         mainpainLayout.setVerticalGroup(
             mainpainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 365, Short.MAX_VALUE)
+            .addGap(0, 543, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Master");
@@ -118,7 +120,8 @@ public class MainFrame extends javax.swing.JFrame {
             .addComponent(mainpain)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(742, 603));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
