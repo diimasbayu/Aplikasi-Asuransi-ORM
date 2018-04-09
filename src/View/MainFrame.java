@@ -139,7 +139,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem11);
 
-        jMenuItem10.setText("jMenuItem10");
+        jMenuItem10.setText("Laporan");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
