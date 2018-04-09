@@ -6,13 +6,15 @@
 package View;
 
 import controller.PembayaranController;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Toshiba
  */
 public class ViewPembayaran extends javax.swing.JInternalFrame {
-    private String header[] ={" NIK "," Nama Nasabah "," Kode ASuransi "," Jenis Asuransi "};
+    private String header[] ={" NIK "," Nama Nasabah "," Kode ASuransi ", " Jenis Asuransi ","Tanggal Bayar"};
     public PembayaranController pc;
 
     /**
@@ -22,7 +24,16 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         initComponents();
         
         pc = new PembayaranController();
-        pc.BindingAll(tbl_listasuransi, header);
+       // pc.BindingAll(tbl_listasuransi, header);
+    }
+    
+    void batal(){
+        txt_nmrPolis.setText("");
+        txt_nmrPembayaran.setText("");
+        txt_jenisAsuransi.setText("");
+        txt_kodeAsuransi.setText("");
+        txt_tglPembayaran.setDate(new Date());
+        txt_totalBayar.setText("");
     }
 
     /**
@@ -75,6 +86,11 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
             }
         ));
+        tbl_listasuransi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_listasuransiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_listasuransi);
 
         jLabel2.setText("Nomor Pembayaran   :");
@@ -97,6 +113,11 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         });
 
         btn_batal.setText("Batal");
+        btn_batal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_batalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -206,17 +227,37 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
     private void btn_cariIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariIDActionPerformed
          // TODO add your handling code here:
-//         String kolom = "noPolis";
-//          pc.bindingSearch(tbl_listasuransi, header, kolom,
-//                txt_cariID.getText());
+         String kolom = "noPolis";
+          pc.bindingSearch(tbl_listasuransi, header, kolom,
+                txt_cariID.getText());
     }//GEN-LAST:event_btn_cariIDActionPerformed
 
     private void btn_bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bayarActionPerformed
         // TODO add your handling code here:
-//        boolean hasil = false;
-//        hasil = pc.insert(txt_nmrPembayaran.getText(), txt_tglPembayaran.getDate().getTime()+""
-//                , txt_totalBayar.getText(), txt_kodeAsuransi.getText(), txt_nmrPolis.getText());
+        boolean hasil = false;
+        hasil = pc.bayar(txt_nmrPembayaran.getText(), txt_tglPembayaran.getDate().getTime()+""
+                , (Long.valueOf(txt_totalBayar.getText())),txt_nmrPolis.getText(), txt_kodeAsuransi.getText() );
+        String pesan = "gagal menginputkan data";
+        if (hasil) {
+            pesan = "berhasil menginputkan data";
+        }
+        JOptionPane.showMessageDialog(this, pesan);
+        //reset();
+        pc.BindingAll(tbl_listasuransi, header);
     }//GEN-LAST:event_btn_bayarActionPerformed
+
+    private void tbl_listasuransiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_listasuransiMouseClicked
+         // TODO add your handling code here:
+         
+         txt_nmrPolis.setText(txt_cariID.getText());
+         txt_kodeAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 2)+"");
+         txt_jenisAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 3)+"");
+    }//GEN-LAST:event_tbl_listasuransiMouseClicked
+
+    private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
+         // TODO add your handling code here:
+         batal();
+    }//GEN-LAST:event_btn_batalActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -241,4 +282,6 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser txt_tglPembayaran;
     private javax.swing.JTextField txt_totalBayar;
     // End of variables declaration//GEN-END:variables
+
+
 }

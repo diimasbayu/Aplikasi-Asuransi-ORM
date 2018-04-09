@@ -96,7 +96,7 @@ public class Asuransi implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Asuransi[ kodeAsuransi=" + kodeAsuransi + " ]";
+        return "" + kodeAsuransi + "";
     }
     
 }

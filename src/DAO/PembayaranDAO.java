@@ -7,12 +7,17 @@ package DAO;
 
 import java.util.List;
 import org.hibernate.Transaction;
+import tools.HibernateUtil;
 
 /**
  *
  * @author dbayu
  */
 public class PembayaranDAO implements InterfaceDAO{
+
+    public PembayaranDAO() {
+        this.fdao = new FunctionDAO(HibernateUtil.getSessionFactory());
+    }
     
     public Transaction transaction;
     public  FunctionDAO fdao;
@@ -34,12 +39,12 @@ public class PembayaranDAO implements InterfaceDAO{
 
     @Override
     public List<Object> getAll() {
-        return fdao.getAll(" from Pembayaran");
+        return fdao.getAll("from Pembayaran");
     }
 
     @Override
     public List<Object> search(String category, String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    return fdao.getAll("FROM Pembayaran WHERE " + category + " LIKE '%" + search + "%'");
     }
 
     @Override

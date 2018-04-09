@@ -129,7 +129,7 @@ public class Pembayaran implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Pembayaran[ noPembayaran=" + noPembayaran + " ]";
+        return "" + noPembayaran + "";
     }
     
 }

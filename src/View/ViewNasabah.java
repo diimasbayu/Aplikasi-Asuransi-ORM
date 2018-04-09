@@ -6,6 +6,7 @@
 package View;
 
 import controller.NasabahController;
+import java.time.Instant;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -460,7 +461,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     public void reset() {
         txtNIK.setText("");
         txtNama.setText("");
-//        txtTanggal.setText("");
+        tglChoser.setDate(new Date());
         txtAlamat.setText("");
         txtPekerjaan.setText("");
         txtAlamat.setText("");
