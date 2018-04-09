@@ -28,13 +28,14 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         
         pc = new PembayaranController();
        // pc.BindingAll(tbl_listasuransi, header);
-       pc.loadID(cmb_asuransi);
+//       pc.loadID(cmb_asuransi);
     }
     
     void batal(){
         txt_nmrPolis.setText("");
         txt_nmrPembayaran.setText("");
-        
+        txt_kdAsuransi.setText("");
+        txt_jenisAsuransi.setText("");
         txt_tglPembayaran.setDate(new Date());
         txt_totalBayar.setText("");
     }
@@ -65,7 +66,9 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         btn_bayar = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
-        cmb_asuransi = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        txt_kdAsuransi = new javax.swing.JTextField();
+        txt_jenisAsuransi = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -102,7 +105,7 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nomor Polis                :");
 
-        jLabel7.setText("Asuransi       :");
+        jLabel7.setText("Kode Asuransi       :");
 
         btn_bayar.setText("Bayar");
         btn_bayar.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +120,8 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                 btn_batalActionPerformed(evt);
             }
         });
+
+        jLabel8.setText("Jenis Asuransi       :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,10 +150,16 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_nmrPolis, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmb_asuransi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_kdAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_jenisAsuransi))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_batal)
@@ -164,11 +175,13 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(txt_nmrPolis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(cmb_asuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_kdAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txt_jenisAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_tglPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,11 +220,11 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cariID)
                     .addComponent(txt_cariID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,20 +242,23 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         boolean hasil = false;
         hasil = pc.bayar(txt_nmrPembayaran.getText(), txt_tglPembayaran.getDate().getTime()+""
                 , (Long.valueOf(txt_totalBayar.getText())),txt_nmrPolis.getText()
-                , cmb_asuransi.getSelectedItem().toString() );
+                , txt_kdAsuransi.getText() );
         String pesan = "gagal menginputkan data";
         if (hasil) {
             pesan = "berhasil menginputkan data";
         }
         JOptionPane.showMessageDialog(this, pesan);
         //reset();
-        pc.BindingAll(tbl_listasuransi, header);
+        String kolom = "noPolis";
+        pc.bindingSearch(tbl_listasuransi, header, kolom,
+                txt_cariID.getText());
     }//GEN-LAST:event_btn_bayarActionPerformed
 
     private void tbl_listasuransiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_listasuransiMouseClicked
          // TODO add your handling code here:
          int row = tbl_listasuransi.getSelectedRow();
-         cmb_asuransi.setSelectedItem(getCombo(true).get(row));
+         txt_kdAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 2)+"");
+         txt_jenisAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 3)+"");
          txt_nmrPolis.setText(txt_cariID.getText());
     }//GEN-LAST:event_tbl_listasuransiMouseClicked
 
@@ -266,17 +282,19 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_bayar;
     private javax.swing.JButton btn_cariID;
-    private javax.swing.JComboBox<String> cmb_asuransi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_listasuransi;
     private javax.swing.JTextField txt_cariID;
+    private javax.swing.JTextField txt_jenisAsuransi;
+    private javax.swing.JTextField txt_kdAsuransi;
     private javax.swing.JTextField txt_nmrPembayaran;
     private javax.swing.JTextField txt_nmrPolis;
     private com.toedter.calendar.JDateChooser txt_tglPembayaran;
