@@ -14,16 +14,16 @@ import tools.HibernateUtil;
  *
  * @author dbayu
  */
-public class NasabahDAO implements InterfaceDAO{
+public class NasabahDAO implements InterfaceDAO {
 
     public Transaction transaction;
-    
-        public FunctionDAO fdao;
+
+    public FunctionDAO fdao;
 
     public NasabahDAO() {
         this.fdao = new FunctionDAO(HibernateUtil.getSessionFactory());
     }
-        
+
     @Override
     public boolean insert(Object object) {
         return fdao.insert(object);
@@ -31,13 +31,13 @@ public class NasabahDAO implements InterfaceDAO{
 
     @Override
     public boolean update(Object object) {
-   
+
         return fdao.insert(object);
     }
 
     @Override
     public boolean delete(Object object) {
-   
+
         return fdao.delete(Nasabah.class, object.toString());
     }
 
@@ -48,13 +48,13 @@ public class NasabahDAO implements InterfaceDAO{
 
     @Override
     public List<Object> search(String category, String search) {
-        return fdao.getAll("FROM Nasabah WHERE " + category + " LIKE '%" + search + "%'"); 
-    
-        }
+        return fdao.getAll("FROM Nasabah WHERE " + category + " LIKE '%" + search + "%'");
+
+    }
 
     @Override
     public Object getById(String id) {
         return fdao.getById("from Nasabah where NIK='" + id + "'");
-        }
-    
+    }
+
 }

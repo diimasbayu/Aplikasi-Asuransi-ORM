@@ -107,4 +107,9 @@ public class NasabahController {
                     + admin.getNamaAdmin());
         });
     }
+    
+     public void bindingLaporanNasabah(JTable table,String[] header, String category,String cari) {
+        BindingTabels(table, header, adao.search(category, cari));
+
+    }
 }

@@ -79,4 +79,9 @@ public class PembayaranController {
         return adao.insert(p);
     }
     
+     public void bindingLaporanPembayaran(JTable table,String[] header, String category,String cari) {
+        bindingTable(table, header, pdao.search(category, cari));
+
+    }
+    
 }
