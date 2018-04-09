@@ -8,11 +8,13 @@ package controller;
 import DAO.AsuransiDAO;
 import DAO.NasabahDAO;
 import DAO.PembayaranDAO;
+import entities.Admin;
 import entities.Asuransi;
 import entities.Nasabah;
 import entities.Pembayaran;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -84,4 +86,10 @@ public class PembayaranController {
 
     }
     
+     public void loadID(JComboBox jComboBox) {
+        adao.getAll().stream().map((object) -> (Asuransi) object).forEachOrdered((asuransi) -> {
+            jComboBox.addItem(asuransi.getKodeAsuransi() + " - "
+                    + asuransi.getJenisAsuransi());
+        });
+    }
 }

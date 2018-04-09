@@ -6,7 +6,9 @@
 package View;
 
 import controller.PembayaranController;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +18,7 @@ import javax.swing.JOptionPane;
 public class ViewPembayaran extends javax.swing.JInternalFrame {
     private String header[] ={" NIK "," Nama Nasabah "," Kode ASuransi ", " Jenis Asuransi ","Tanggal Bayar"};
     public PembayaranController pc;
+    private List<String> datas;
 
     /**
      * Creates new form ViewPembayaran
@@ -25,13 +28,13 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         
         pc = new PembayaranController();
        // pc.BindingAll(tbl_listasuransi, header);
+       pc.loadID(cmb_asuransi);
     }
     
     void batal(){
         txt_nmrPolis.setText("");
         txt_nmrPembayaran.setText("");
-        txt_jenisAsuransi.setText("");
-        txt_kodeAsuransi.setText("");
+        
         txt_tglPembayaran.setDate(new Date());
         txt_totalBayar.setText("");
     }
@@ -55,16 +58,14 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         txt_nmrPolis = new javax.swing.JTextField();
         txt_nmrPembayaran = new javax.swing.JTextField();
         txt_tglPembayaran = new com.toedter.calendar.JDateChooser();
         txt_totalBayar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txt_kodeAsuransi = new javax.swing.JTextField();
-        txt_jenisAsuransi = new javax.swing.JTextField();
         btn_bayar = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
+        cmb_asuransi = new javax.swing.JComboBox<>();
 
         jLabel1.setText("jLabel1");
 
@@ -101,9 +102,7 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nomor Polis                :");
 
-        jLabel6.setText("Jenis Asuransi  :");
-
-        jLabel7.setText("Kode Asuransi  :");
+        jLabel7.setText("Asuransi       :");
 
         btn_bayar.setText("Bayar");
         btn_bayar.addActionListener(new java.awt.event.ActionListener() {
@@ -146,15 +145,10 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_nmrPolis, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_kodeAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_jenisAsuransi))))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmb_asuransi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_batal)
@@ -170,13 +164,11 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(txt_nmrPolis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(txt_kodeAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_asuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(txt_jenisAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_tglPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,7 +228,8 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         boolean hasil = false;
         hasil = pc.bayar(txt_nmrPembayaran.getText(), txt_tglPembayaran.getDate().getTime()+""
-                , (Long.valueOf(txt_totalBayar.getText())),txt_nmrPolis.getText(), txt_kodeAsuransi.getText() );
+                , (Long.valueOf(txt_totalBayar.getText())),txt_nmrPolis.getText()
+                , cmb_asuransi.getSelectedItem().toString() );
         String pesan = "gagal menginputkan data";
         if (hasil) {
             pesan = "berhasil menginputkan data";
@@ -248,10 +241,9 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
     private void tbl_listasuransiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_listasuransiMouseClicked
          // TODO add your handling code here:
-         
+         int row = tbl_listasuransi.getSelectedRow();
+         cmb_asuransi.setSelectedItem(getCombo(true).get(row));
          txt_nmrPolis.setText(txt_cariID.getText());
-         txt_kodeAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 2)+"");
-         txt_jenisAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 3)+"");
     }//GEN-LAST:event_tbl_listasuransiMouseClicked
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
@@ -259,24 +251,32 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
          batal();
     }//GEN-LAST:event_btn_batalActionPerformed
 
+    private List<String> getCombo(boolean isCity){
+        List<String> isi = new ArrayList<>();
+        String[] daftar = new String[datas.size()];
+        for (String data : datas) {
+            daftar = data.split(";");
+            if (isCity) isi.add(daftar[1]);
+            else isi.add(daftar[0]);
+        }
+        return isi;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_bayar;
     private javax.swing.JButton btn_cariID;
+    private javax.swing.JComboBox<String> cmb_asuransi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_listasuransi;
     private javax.swing.JTextField txt_cariID;
-    private javax.swing.JTextField txt_jenisAsuransi;
-    private javax.swing.JTextField txt_kodeAsuransi;
     private javax.swing.JTextField txt_nmrPembayaran;
     private javax.swing.JTextField txt_nmrPolis;
     private com.toedter.calendar.JDateChooser txt_tglPembayaran;

@@ -9,12 +9,21 @@ import DAO.AdminDAO;
 import DAO.NasabahDAO;
 import entities.Admin;
 import entities.Nasabah;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -109,7 +118,14 @@ public class NasabahController {
     }
     
      public void bindingLaporanNasabah(JTable table,String[] header, String category,String cari) {
-        BindingTabels(table, header, adao.search(category, cari));
+        BindingTabels(table, header, nao.search(category, cari));
 
     }
+     
+    /**
+     *
+     */
+    public void report(){
+         
+     }
 }
