@@ -8,11 +8,13 @@ package controller;
 import DAO.AdminDAO;
 import DAO.NasabahDAO;
 import entities.Admin;
+import entities.Asuransi;
 import entities.Nasabah;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,14 +41,15 @@ public class NasabahController {
         this.adao = new AdminDAO();
     }
 
-    public void BindingAll(JTable table, String[] header) {
-        BindingTabels(table, header, nao.getAll());
-    }
+    
 
-    private void BindingTabels(JTable table, String[] header, List<Object> datas) {
+    private List<String> BindingTabels(JTable table, String[] header, List<Object> datas) { 
+        List<String> datalist = new ArrayList<>();
         DefaultTableModel model = new DefaultTableModel(header, 0);
         for (Object data : datas) {
             Nasabah n = (Nasabah) data;
+             datalist.add(n.getIdAdmin().getIdAdmin()+" - "
+                    +n.getIdAdmin().getNamaAdmin());
             Object[] data1 = {
                 n.getNik(),
                 n.getNmNasabah(),
@@ -60,6 +63,7 @@ public class NasabahController {
             model.addRow(data1);
         }
         table.setModel(model);
+        return datalist;
     }
 
     public boolean save(String NIK, String nmNasabah, String tglLahir, String pekerjaan, String alamat,
@@ -102,19 +106,33 @@ public class NasabahController {
         return nao.delete(id);
     }
 
-    public void bindingsearch(JTable table, String[] header, String category, String search) {
-        BindingTabels(table, header, nao.search(category, search));
+    public List<String> bindingsearch(JTable table, String[] header, String category, String search) {
+        
+          String cari = search;
+        if (category.equalsIgnoreCase("idAdmin")) {
+            Admin admin = (Admin) adao.search("idAdmin", search).get(0);
+            if (admin == null) {
+                admin = (Admin) adao.search("namaAdmin", search).get(0);
+            }
+            cari = admin.getIdAdmin().toString();
+        }
+        return BindingTabels(table, header, nao.search(category, cari));
     }
 
-    public void bindingall(JTable table, String[] header) {
-        BindingTabels(table, header, nao.getAll());
+    public List<String> bindingall(JTable table, String[] header) {
+        return BindingTabels(table, header, nao.getAll());
     }
 
-    public void loadID(JComboBox jComboBox) {
+    public List<String> loadID(JComboBox jComboBox) {
+        List<String> datas = new ArrayList<>();
+        jComboBox.addItem(" - ");
         adao.getAll().stream().map((object) -> (Admin) object).forEachOrdered((admin) -> {
-            jComboBox.addItem(admin.getIdAdmin() + " - "
-                    + admin.getNamaAdmin());
+            String isi = admin.getIdAdmin() + " - " + admin.getNamaAdmin();
+            jComboBox.addItem(isi);
+            datas.add(isi);
         });
+        
+        return datas;
     }
     
      public void bindingLaporanNasabah(JTable table,String[] header, String category,String cari) {
@@ -122,10 +140,6 @@ public class NasabahController {
 
     }
      
-    /**
-     *
-     */
-    public void report(){
-         
-     }
+    
+   
 }

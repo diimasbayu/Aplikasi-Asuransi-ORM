@@ -39,7 +39,7 @@ public class PembayaranDAO implements InterfaceDAO{
 
     @Override
     public List<Object> getAll() {
-        return fdao.getAll("from Pembayaran");
+        return fdao.getAll("from Pembayaran order by noPembayaran");
     }
 
     @Override

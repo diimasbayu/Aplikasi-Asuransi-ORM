@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Toshiba
  */
 public class ViewPembayaran extends javax.swing.JInternalFrame {
-    private String header[] ={" NIK "," Nama Nasabah "," Kode ASuransi ", " Jenis Asuransi ","Tanggal Bayar"};
+    private String header[] ={" NIK "," Nama Nasabah "," Kode Asuransi ", " Jenis Asuransi ","Tanggal Bayar"};
     public PembayaranController pc;
     private List<String> datas;
 
@@ -25,18 +25,17 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
      */
     public ViewPembayaran() {
         initComponents();
-        
+        datas = new ArrayList<>();
         pc = new PembayaranController();
        // pc.BindingAll(tbl_listasuransi, header);
-//       pc.loadID(cmb_asuransi);
+       datas = pc.loadID(cmb_asuransi);
     }
     
-    void batal(){
+    private void batal(){
         txt_nmrPolis.setText("");
         txt_nmrPembayaran.setText("");
-        txt_kdAsuransi.setText("");
-        txt_jenisAsuransi.setText("");
         txt_tglPembayaran.setDate(new Date());
+        cmb_asuransi.setSelectedIndex(0);
         txt_totalBayar.setText("");
     }
 
@@ -66,16 +65,22 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         btn_bayar = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        txt_kdAsuransi = new javax.swing.JTextField();
-        txt_jenisAsuransi = new javax.swing.JTextField();
+        cmb_asuransi = new javax.swing.JComboBox<>();
 
         jLabel1.setText("jLabel1");
+
+        setClosable(true);
 
         btn_cariID.setText("Cari ID");
         btn_cariID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cariIDActionPerformed(evt);
+            }
+        });
+
+        txt_cariID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_cariIDMouseEntered(evt);
             }
         });
 
@@ -105,7 +110,7 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nomor Polis                :");
 
-        jLabel7.setText("Kode Asuransi       :");
+        jLabel7.setText("Jenis Asuransi       :");
 
         btn_bayar.setText("Bayar");
         btn_bayar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,8 +126,6 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel8.setText("Jenis Asuransi       :");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -131,69 +134,66 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_totalBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_tglPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_totalBayar)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_nmrPolis, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                        .addGap(75, 75, 75)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_kdAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
+                                .addComponent(cmb_asuransi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_jenisAsuransi))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_batal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_bayar)))
+                                .addComponent(txt_tglPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_batal)
+                .addGap(18, 18, 18)
+                .addComponent(btn_bayar)
+                .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_nmrPolis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(txt_kdAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(txt_jenisAsuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_tglPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txt_nmrPolis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(cmb_asuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txt_nmrPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txt_tglPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txt_totalBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_bayar)
-                    .addComponent(btn_batal))
+                    .addComponent(btn_batal)
+                    .addComponent(btn_bayar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -224,7 +224,7 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -232,8 +232,10 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
     private void btn_cariIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariIDActionPerformed
          // TODO add your handling code here:
+         
+        datas = new ArrayList<>();
          String kolom = "noPolis";
-          pc.bindingSearch(tbl_listasuransi, header, kolom,
+       datas =  pc.bindingSearch(tbl_listasuransi, header, kolom,
                 txt_cariID.getText());
     }//GEN-LAST:event_btn_cariIDActionPerformed
 
@@ -242,7 +244,7 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         boolean hasil = false;
         hasil = pc.bayar(txt_nmrPembayaran.getText(), txt_tglPembayaran.getDate().getTime()+""
                 , (Long.valueOf(txt_totalBayar.getText())),txt_nmrPolis.getText()
-                , txt_kdAsuransi.getText() );
+                , cmb_asuransi.getSelectedItem().toString() );
         String pesan = "gagal menginputkan data";
         if (hasil) {
             pesan = "berhasil menginputkan data";
@@ -250,16 +252,19 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, pesan);
         //reset();
         String kolom = "noPolis";
-        pc.bindingSearch(tbl_listasuransi, header, kolom,
+       datas = pc.bindingSearch(tbl_listasuransi, header, kolom,
                 txt_cariID.getText());
     }//GEN-LAST:event_btn_bayarActionPerformed
 
     private void tbl_listasuransiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_listasuransiMouseClicked
          // TODO add your handling code here:
-         int row = tbl_listasuransi.getSelectedRow();
-         txt_kdAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 2)+"");
-         txt_jenisAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 3)+"");
+//         txt_kdAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 2)+"");
+//         txt_jenisAsuransi.setText(tbl_listasuransi.getValueAt(tbl_listasuransi.getSelectedRow(), 3)+"");
          txt_nmrPolis.setText(txt_cariID.getText());
+         int row = tbl_listasuransi.getSelectedRow();
+         cmb_asuransi.setSelectedItem(getCombo(true).get(row));
+         System.out.println(getCombo(true).get(row));
+//         cmb_asuransi.setSelectedItem(tbl_listasuransi.getValueAt(row, 2));
     }//GEN-LAST:event_tbl_listasuransiMouseClicked
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
@@ -267,34 +272,39 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
          batal();
     }//GEN-LAST:event_btn_batalActionPerformed
 
-    private List<String> getCombo(boolean isCity){
+    private void txt_cariIDMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_cariIDMouseEntered
+         // TODO add your handling code here:
+         
+   
+    }//GEN-LAST:event_txt_cariIDMouseEntered
+
+   private List<String> getCombo(boolean isCity){
         List<String> isi = new ArrayList<>();
         String[] daftar = new String[datas.size()];
         for (String data : datas) {
             daftar = data.split(";");
-            if (isCity) isi.add(daftar[1]);
-            else isi.add(daftar[0]);
+            if (isCity) isi.add(daftar[0]);
+            else isi.add(daftar[1]);
         }
         return isi;
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_bayar;
     private javax.swing.JButton btn_cariID;
+    private javax.swing.JComboBox<String> cmb_asuransi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_listasuransi;
     private javax.swing.JTextField txt_cariID;
-    private javax.swing.JTextField txt_jenisAsuransi;
-    private javax.swing.JTextField txt_kdAsuransi;
     private javax.swing.JTextField txt_nmrPembayaran;
     private javax.swing.JTextField txt_nmrPolis;
     private com.toedter.calendar.JDateChooser txt_tglPembayaran;
@@ -303,3 +313,4 @@ public class ViewPembayaran extends javax.swing.JInternalFrame {
 
 
 }
+

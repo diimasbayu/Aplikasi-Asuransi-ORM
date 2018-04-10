@@ -14,6 +14,7 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -49,6 +50,10 @@ public class ViewLaporanNasabah extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLaporanNasabah = new javax.swing.JTable();
         btn_cetaklaporan = new javax.swing.JButton();
+
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         cmbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nama", "ID Admin" }));
 
@@ -134,27 +139,68 @@ public class ViewLaporanNasabah extends javax.swing.JInternalFrame {
 
     private void btn_cetaklaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetaklaporanActionPerformed
         // TODO add your handling code here:
-        try {
-                String path = "report/ReportNasabah.jasper";  
-                String driver="oracle.jdbc.OracleDriver";
-                String konek="jdbc:oracle:thin:@localhost:1521:XE";
-                String user="system";
-                String password="root";
-                HashMap parameter = new HashMap();
-                Class.forName(driver);
-                Connection conn = DriverManager.getConnection(konek,user,password);
-                File reportFile=new File(path);
-                InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
-//                JasperReport jReport = (JasperReport) JRLoader.loadObject(reportFile.getPath());
-                JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
-                JasperViewer.viewReport(jPrint, true);
-                JasperViewer.setDefaultLookAndFeelDecorated(true);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage()
+           try {
+            String path = "report/ReportNasabah.jasper";
+            String driver="oracle.jdbc.OracleDriver";
+            String konek="jdbc:oracle:thin:@localhost:1521:XE";
+            String user="system";
+            String password="root";
+            HashMap parameter = new HashMap();
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(konek,user,password);
+            File reportFile=new File(path);
+//            parameter.put("", txtCari.getText());
+            InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
+//            JasperReport jReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+//            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
+            JasperPrint jp = JasperFillManager.fillReport(jReport, parameter, conn);
+//            JasperViewer.viewReport(jPrint, true);
+//            JasperViewer viewer = new JasperViewer(jPrint);
+//            JasperViewer.setDefaultLookAndFeelDecorated(true);
+//            cr.add(viewer);
+//            cr.show();
+            JRViewer jViewer = new JRViewer (jp);
+            jViewer.setVisible(true);
+            jViewer.setOpaque(true);
+            jScrollPane1.add(jViewer);
+            jScrollPane1.setViewportView(jViewer);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage()
                 ,"Cetak Laporan", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btn_cetaklaporanActionPerformed
 
+    public void koneksi() {
+        try {
+            String path = "report/ReportNasabah.jasper";
+            String driver="oracle.jdbc.OracleDriver";
+            String konek="jdbc:oracle:thin:@localhost:1521:XE";
+            String user="system";
+            String password="root";
+            HashMap parameter = new HashMap();
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(konek,user,password);
+            File reportFile=new File(path);
+            InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
+//            JasperReport jReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+//            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
+            JasperPrint jp = JasperFillManager.fillReport(jReport, parameter, conn);
+//            JasperViewer.viewReport(jPrint, true);
+//            JasperViewer viewer = new JasperViewer(jPrint);
+//            JasperViewer.setDefaultLookAndFeelDecorated(true);
+//            cr.add(viewer);
+//            cr.show();
+            JRViewer jViewer = new JRViewer (jp);
+            jViewer.setVisible(true);
+            jViewer.setOpaque(true);
+            jScrollPane1.add(jViewer);
+            jScrollPane1.setViewportView(jViewer);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage(),
+                     "Cetak Laporan", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;

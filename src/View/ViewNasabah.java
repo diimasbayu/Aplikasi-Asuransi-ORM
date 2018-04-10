@@ -7,7 +7,9 @@ package View;
 
 import controller.NasabahController;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,13 +24,14 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     private String header[] = {"NIK", "Nama Nasabah", "Tanggal Lahir", "Pekerjaan",
         "Alamat", "Status", "Penghasilan", "No Polis", "ID Admin"};
     public NasabahController nc;
+    private List<String> datas;
 
     public ViewNasabah() {
         initComponents();
-
+        datas = new ArrayList<>();
         nc = new NasabahController();
-        nc.bindingall(tblNasabah, header);
-        nc.loadID(cmb_admin);
+        datas = nc.bindingall(tblNasabah, header);
+         nc.loadID(cmb_admin);
         reset();
     }
 
@@ -72,6 +75,10 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Nasabah");
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
@@ -288,7 +295,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         );
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel11.setText("MASTER BASABAH");
+        jLabel11.setText("MASTER NASABAH");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -332,6 +339,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtStatusActionPerformed
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
+        datas = new ArrayList<>();
         String kolom = "";
         switch (cmbNasabah.getSelectedIndex()) {
             case 0:
@@ -358,24 +366,33 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
             default:
                 throw new AssertionError();
         }
-        nc.bindingsearch(tblNasabah, header, kolom,
+       datas = nc.bindingsearch(tblNasabah, header, kolom,
                 txtCari.getText());
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+         datas = new ArrayList<>();
         boolean hasil = false;
             hasil = nc.save(txtNIK.getText(), txtNama.getText(), tglChoser.getDate().getTime()+"", 
                     txtPekerjaan.getText(), txtAlamat.getText(), txtStatus.getText(), txtPenghasilan.getText(), 
                     txtNoPolis.getText(), cmb_admin.getSelectedItem().toString(), txtNIK.isEnabled());
 
-        
+            
+            
         String pesan = "gagal menginputkan data";
-        if (hasil) {
+        if (txtNIK.isEnabled()) {
+            ViewPembayaran vp = new ViewPembayaran();
+            ViewNasabah vn = new ViewNasabah();
+            this.getParent().add(vp);
+            vp.setVisible(true);
+            vn.setVisible(false);
+        }if (hasil) {
+            
             pesan = "berhasil menginputkan data";
         }
         JOptionPane.showMessageDialog(this, pesan);
         reset();
-        nc.bindingall(tblNasabah, header);
+        datas = nc.bindingall(tblNasabah, header);
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
@@ -391,6 +408,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
 
         }
         reset();
+        
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void tblNasabahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNasabahMouseClicked
@@ -403,7 +421,9 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         txtPenghasilan.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 6)+"");
         txtNoPolis.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 7)+"");
        // txtIDAdmin.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 8)+"");
-
+          int row = tblNasabah.getSelectedRow();
+         cmb_admin.setSelectedItem(getCombo(true).get(row));
+         System.out.println(getCombo(true).get(row));
         txtNIK.setEnabled(false);
         txtNama.setEnabled(true);
         tglChoser.setEnabled(true);
@@ -468,11 +488,21 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         txtStatus.setText("");
         txtPenghasilan.setText("");
         txtNoPolis.setText("");
-      //  txtIDAdmin.setText("");
+        txtNIK.setEnabled(true);
         cmbNasabah.setSelectedItem(0);
 
         btnSimpan.setEnabled(false);
         btnHapus.setEnabled(false);
+    }
+    private List<String> getCombo(boolean isCity){
+        List<String> isi = new ArrayList<>();
+        String[] daftar = new String[datas.size()];
+        for (String data : datas) {
+            daftar = data.split(";");
+            if (isCity) isi.add(daftar[0]);
+            else isi.add(daftar[1]);
+        }
+        return isi;
     }
 
 }

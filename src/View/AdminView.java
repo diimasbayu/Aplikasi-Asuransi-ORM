@@ -62,6 +62,7 @@ public class AdminView extends javax.swing.JInternalFrame {
         txtAlamat = new javax.swing.JTextArea();
 
         setBackground(new java.awt.Color(204, 204, 255));
+        setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Admin");
@@ -70,7 +71,7 @@ public class AdminView extends javax.swing.JInternalFrame {
         setOpaque(true);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel6.setText("PT. ASU RANSI ");
+        jLabel6.setText("PT. ASURANSI ");
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -281,12 +282,9 @@ public class AdminView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
