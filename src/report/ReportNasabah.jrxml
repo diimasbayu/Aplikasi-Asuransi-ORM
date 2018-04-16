@@ -3,6 +3,12 @@
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="no_polis" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="kategori" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      NASABAH."NIK" AS NASABAH_NIK,
@@ -12,7 +18,10 @@
      NASABAH."NO_POLIS" AS NASABAH_NO_POLIS,
      ADMIN."NAMA_ADMIN" AS ADMIN_NAMA_ADMIN
 FROM
-     "HR"."ADMIN" ADMIN INNER JOIN "HR"."NASABAH" NASABAH ON ADMIN."ID_ADMIN" = NASABAH."ID_ADMIN"]]>
+     "HR"."ADMIN" ADMIN INNER JOIN "HR"."NASABAH" NASABAH ON ADMIN."ID_ADMIN" = NASABAH."ID_ADMIN"
+where NASABAH."NIK" LIKE $P{kategori} or
+NASABAH."NO_POLIS" LIKE $P{kategori} or
+NASABAH."NM_NASABAH" LIKE $P{kategori}]]>
 	</queryString>
 	<field name="NASABAH_NIK" class="java.lang.String"/>
 	<field name="NASABAH_NM_NASABAH" class="java.lang.String"/>
@@ -24,18 +33,29 @@ FROM
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="107" splitType="Stretch">
 			<staticText>
-				<reportElement x="158" y="12" width="255" height="49" uuid="c69a90df-111a-48a5-8941-ae509fa9feac"/>
+				<reportElement x="149" y="47" width="255" height="49" uuid="c69a90df-111a-48a5-8941-ae509fa9feac"/>
 				<textElement>
 					<font size="24"/>
 				</textElement>
 				<text><![CDATA[Laporan Data Nasabah]]></text>
 			</staticText>
+			<image>
+				<reportElement x="17" y="11" width="72" height="50" uuid="b570727e-3269-410c-8624-7d16e07a4762"/>
+				<imageExpression><![CDATA["D:\\Document\\training MII\\java netbeans\\icon\\manula.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="5" y="62" width="74" height="20" uuid="9f5ad9cc-c949-4588-ae1c-c0dd63274548"/>
+				<textElement textAlignment="Center">
+					<font fontName="Castellar" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Manula]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="455" y="0" width="100" height="20" uuid="78628d68-3e2c-4a0e-966c-108f221fa8f5"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>

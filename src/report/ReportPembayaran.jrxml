@@ -15,7 +15,8 @@
      PEMBAYARAN."TGL_PEMBAYARAN" AS PEMBAYARAN_TGL_PEMBAYARAN
 FROM
      "HR"."NASABAH" NASABAH INNER JOIN "HR"."PEMBAYARAN" PEMBAYARAN ON NASABAH."NO_POLIS" = PEMBAYARAN."NO_POLIS"
-     INNER JOIN "HR"."ASURANSI" ASURANSI ON PEMBAYARAN."KODE_ASURANSI" = ASURANSI."KODE_ASURANSI"]]>
+     INNER JOIN "HR"."ASURANSI" ASURANSI ON PEMBAYARAN."KODE_ASURANSI" = ASURANSI."KODE_ASURANSI"
+WHERE PEMBAYARAN."NO_POLIS" = $P{no_polis}]]>
 	</queryString>
 	<field name="PEMBAYARAN_NO_POLIS" class="java.lang.String"/>
 	<field name="NASABAH_NIK" class="java.lang.String"/>
@@ -26,13 +27,24 @@ FROM
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="47" splitType="Stretch">
+		<band height="96" splitType="Stretch">
 			<staticText>
-				<reportElement x="155" y="0" width="260" height="46" uuid="cc81c3d8-7e3b-4170-9d2e-a1208630a5d5"/>
+				<reportElement x="155" y="48" width="260" height="46" uuid="cc81c3d8-7e3b-4170-9d2e-a1208630a5d5"/>
 				<textElement>
 					<font size="24"/>
 				</textElement>
 				<text><![CDATA[Laporan Pembayaran]]></text>
+			</staticText>
+			<image>
+				<reportElement x="12" y="2" width="72" height="50" uuid="f6cf9a81-cf9e-4661-b834-5c97c7d75f30"/>
+				<imageExpression><![CDATA["D:\\Document\\training MII\\java netbeans\\icon\\manula.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="53" width="74" height="20" uuid="fc0c230e-6ec2-48d4-8a38-f875c7e30120"/>
+				<textElement textAlignment="Center">
+					<font fontName="Castellar" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Manula]]></text>
 			</staticText>
 		</band>
 	</title>

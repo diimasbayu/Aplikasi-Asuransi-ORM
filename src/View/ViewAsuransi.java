@@ -44,7 +44,6 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -55,9 +54,10 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         btn_delete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_asuransi = new javax.swing.JTable();
-        btn_search = new javax.swing.JButton();
         txt_search = new javax.swing.JTextField();
         cmb_search = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -65,10 +65,7 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Master Asuransi");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("DATA ASURANSI PT. ASURANSI");
-
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(124, 175, 143));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -82,7 +79,13 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/save-icon (1).png"))); // NOI18N
+        txt_jenisasuransi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_jenisasuransiKeyTyped(evt);
+            }
+        });
+
+        btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/save-icon (1).png"))); // NOI18N
         btn_save.setBorder(null);
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +93,7 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Editing-Delete-icon.png"))); // NOI18N
+        btn_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Editing-Delete-icon.png"))); // NOI18N
         btn_delete.setBorder(null);
         btn_delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +131,7 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_jenisasuransi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,10 +158,9 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tbl_asuransi);
 
-        btn_search.setIcon(new javax.swing.ImageIcon("D:\\Document\\training MII\\java netbeans\\icon\\search-icon (1).png")); // NOI18N
-        btn_search.addActionListener(new java.awt.event.ActionListener() {
+        txt_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_searchActionPerformed(evt);
+                txt_searchActionPerformed(evt);
             }
         });
 
@@ -175,9 +177,6 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txt_search, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(cmb_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -195,34 +194,40 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
                         .addComponent(cmb_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_search)
-                        .addGap(12, 12, 12)))
+                        .addGap(56, 56, 56)))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jLabel6.setFont(new java.awt.Font("Century", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 128, 33));
+        jLabel6.setText("MANULA");
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/LOGO.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -231,30 +236,9 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        // TODO add your handling code here:
-         boolean hasil = false;
-        if (!txt_kodeasuransi.isEnabled()) {
-            hasil = ac.update(
-                    txt_kodeasuransi.getText(),
-                    txt_jenisasuransi.getText());
-        } else {
-            hasil = ac.insert(
-                    txt_kodeasuransi.getText(),
-                    txt_jenisasuransi.getText());
-        }
-        String pesan = "gagal menginputkan data";
-        if (hasil) {
-            pesan = "berhasil menginputkan data";
-        }
-        JOptionPane.showMessageDialog(this, pesan);
-        reset();
-        ac.bindingall(tbl_asuransi, header);
-    }//GEN-LAST:event_btn_saveActionPerformed
-
     private void tbl_asuransiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_asuransiMouseClicked
-         // TODO add your handling code here:
-         txt_kodeasuransi.setText(tbl_asuransi.getValueAt(tbl_asuransi.getSelectedRow(), 0).toString());
+        // TODO add your handling code here:
+        txt_kodeasuransi.setText(tbl_asuransi.getValueAt(tbl_asuransi.getSelectedRow(), 0).toString());
         txt_jenisasuransi.setText(tbl_asuransi.getValueAt(tbl_asuransi.getSelectedRow(), 1).toString());
         txt_kodeasuransi.setEnabled(false);
         btn_save.setEnabled(true);
@@ -277,37 +261,66 @@ public class ViewAsuransi extends javax.swing.JInternalFrame {
         reset();
     }//GEN-LAST:event_btn_deleteActionPerformed
 
-    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         // TODO add your handling code here:
-        String kolom = "";
-        switch (cmb_search.getSelectedIndex()) {
-            case 0:
-                kolom = "kodeAsuransi";
-                break;
-            case 1:
-                kolom = "jenisAsuransi";
-                break;
-            default:
-                throw new AssertionError();
+        boolean hasil = false;
+        if (!txt_kodeasuransi.isEnabled()) {
+            hasil = ac.update(
+                txt_kodeasuransi.getText(),
+                txt_jenisasuransi.getText());
+        } else {
+            hasil = ac.insert(
+                txt_kodeasuransi.getText(),
+                txt_jenisasuransi.getText());
         }
-        ac.bindingsearch(tbl_asuransi, header, kolom,
-                txt_search.getText());
-    }//GEN-LAST:event_btn_searchActionPerformed
+        String pesan = "gagal menginputkan data";
+        if (hasil) {
+            pesan = "berhasil menginputkan data";
+        }
+        JOptionPane.showMessageDialog(this, pesan);
+        reset();
+        ac.bindingall(tbl_asuransi, header);
+    }//GEN-LAST:event_btn_saveActionPerformed
 
     private void txt_kodeasuransiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kodeasuransiKeyPressed
         // TODO add your handling code here:
         btn_save.setEnabled(true);
     }//GEN-LAST:event_txt_kodeasuransiKeyPressed
 
+    private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
+        // TODO add your handling code here:
+
+        String kolom = "";
+        switch (cmb_search.getSelectedIndex()) {
+            case 0:
+            kolom = "kodeAsuransi";
+            break;
+            case 1:
+            kolom = "jenisAsuransi";
+            break;
+            default:
+            throw new AssertionError();
+        }
+        ac.bindingsearch(tbl_asuransi, header, kolom,
+            txt_search.getText());
+    }//GEN-LAST:event_txt_searchActionPerformed
+
+    private void txt_jenisasuransiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jenisasuransiKeyTyped
+         // TODO add your handling code here:
+         if(Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_jenisasuransiKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_save;
-    private javax.swing.JButton btn_search;
     private javax.swing.JComboBox<String> cmb_search;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

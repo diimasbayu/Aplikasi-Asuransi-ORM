@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -46,33 +47,14 @@ public class ViewLaporanNasabah extends javax.swing.JInternalFrame {
 
         cmbCari = new javax.swing.JComboBox<>();
         txtCari = new javax.swing.JTextField();
-        btnCari = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblLaporanNasabah = new javax.swing.JTable();
         btn_cetaklaporan = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
 
-        cmbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nama", "ID Admin" }));
-
-        btnCari.setText("Cari");
-        btnCari.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCariActionPerformed(evt);
-            }
-        });
-
-        tblLaporanNasabah.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(tblLaporanNasabah);
+        cmbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nama", "ID Admin", "Nomor Polis" }));
 
         btn_cetaklaporan.setText("Cetak Laporan");
         btn_cetaklaporan.addActionListener(new java.awt.event.ActionListener() {
@@ -85,22 +67,18 @@ public class ViewLaporanNasabah extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_cetaklaporan)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmbCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCari)
-                                .addGap(37, 37, 37)))))
-                .addGap(15, 15, 15))
+                        .addComponent(cmbCari, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_cetaklaporan)
+                        .addGap(0, 148, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,47 +87,30 @@ public class ViewLaporanNasabah extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCari))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cetaklaporan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_cetaklaporan)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
-        // TODO add your handling code here:
-        String kolom = "";
-        switch (cmbCari.getSelectedIndex()) {
-            case 0:
-                kolom = "nmNasabah";
-                break;
-            case 1:
-                kolom = "idAdmin";
-                break;
-            default:
-                throw new AssertionError();
-        }
-        nc.bindingLaporanNasabah(tblLaporanNasabah, header, kolom, txtCari.getText());
-
-    }//GEN-LAST:event_btnCariActionPerformed
-
     private void btn_cetaklaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetaklaporanActionPerformed
         // TODO add your handling code here:
-           try {
-            String path = "report/ReportNasabah.jasper";
+        if (txtCari.getText().equals("")) {
+              try {
+            String path = "report/ReportNasabahWithoutWhere.jasper";
             String driver="oracle.jdbc.OracleDriver";
             String konek="jdbc:oracle:thin:@localhost:1521:XE";
             String user="system";
             String password="root";
+            
             HashMap parameter = new HashMap();
             Class.forName(driver);
             Connection conn = DriverManager.getConnection(konek,user,password);
             File reportFile=new File(path);
-//            parameter.put("", txtCari.getText());
+//            parameter.put("kategori", txtCari.getText());
             InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
 //            JasperReport jReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
 //            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
@@ -168,20 +129,19 @@ public class ViewLaporanNasabah extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage()
                 ,"Cetak Laporan", JOptionPane.ERROR_MESSAGE);
         }
-
-    }//GEN-LAST:event_btn_cetaklaporanActionPerformed
-
-    public void koneksi() {
-        try {
+        }else{
+           try {
             String path = "report/ReportNasabah.jasper";
             String driver="oracle.jdbc.OracleDriver";
             String konek="jdbc:oracle:thin:@localhost:1521:XE";
             String user="system";
             String password="root";
+            
             HashMap parameter = new HashMap();
             Class.forName(driver);
             Connection conn = DriverManager.getConnection(konek,user,password);
             File reportFile=new File(path);
+            parameter.put("kategori", txtCari.getText());
             InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
 //            JasperReport jReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
 //            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
@@ -197,17 +157,19 @@ public class ViewLaporanNasabah extends javax.swing.JInternalFrame {
             jScrollPane1.add(jViewer);
             jScrollPane1.setViewportView(jViewer);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage(),
-                     "Cetak Laporan", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage()
+                ,"Cetak Laporan", JOptionPane.ERROR_MESSAGE);
+        } 
         }
-    }
+           
+
+    }//GEN-LAST:event_btn_cetaklaporanActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCari;
     private javax.swing.JButton btn_cetaklaporan;
     private javax.swing.JComboBox<String> cmbCari;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblLaporanNasabah;
     private javax.swing.JTextField txtCari;
     // End of variables declaration//GEN-END:variables
 }

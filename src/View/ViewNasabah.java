@@ -56,7 +56,6 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNIK = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtStatus = new javax.swing.JTextField();
         txtPenghasilan = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtNama = new javax.swing.JTextField();
@@ -68,12 +67,15 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         cmb_admin = new javax.swing.JComboBox<>();
         btnSimpan = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
-        txtAlamat = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtPekerjaan = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAlamat = new javax.swing.JTextArea();
+        cmb_status = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -81,7 +83,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Nasabah");
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(124, 175, 143));
 
         tblNasabah.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,6 +101,12 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblNasabah);
 
         cmbNasabah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NIK", "Nama Nasabah", "Pekerjaan", "Status", "Penghasilan", "No Polis", "ID Admin" }));
+
+        txtCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCariActionPerformed(evt);
+            }
+        });
 
         btnCari.setIcon(new javax.swing.ImageIcon("D:\\Document\\training MII\\java netbeans\\icon\\search-icon (1).png")); // NOI18N
         btnCari.addActionListener(new java.awt.event.ActionListener() {
@@ -138,9 +146,9 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(124, 175, 143));
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(92, 146, 112));
 
         jLabel1.setText("NIK");
 
@@ -148,17 +156,26 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNIKKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNIKKeyTyped(evt);
+            }
         });
 
         jLabel7.setText("Status");
 
-        txtStatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStatusActionPerformed(evt);
+        txtPenghasilan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPenghasilanKeyTyped(evt);
             }
         });
 
         jLabel8.setText("Pengahasilan");
+
+        txtNama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNamaKeyTyped(evt);
+            }
+        });
 
         jLabel2.setText("Nama Nasabah");
 
@@ -166,14 +183,14 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
 
         jLabel10.setText("No Polis");
 
-        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/save-icon (1).png"))); // NOI18N
+        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/save-icon (1).png"))); // NOI18N
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimpanActionPerformed(evt);
             }
         });
 
-        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Editing-Delete-icon.png"))); // NOI18N
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Editing-Delete-icon.png"))); // NOI18N
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHapusActionPerformed(evt);
@@ -182,9 +199,21 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
 
         jLabel9.setText("ID Admin");
 
+        txtPekerjaan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPekerjaanKeyTyped(evt);
+            }
+        });
+
         jLabel5.setText("Pekerjaan");
 
         jLabel6.setText("Alamat");
+
+        txtAlamat.setColumns(20);
+        txtAlamat.setRows(5);
+        jScrollPane2.setViewportView(txtAlamat);
+
+        cmb_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kawin", "Belum Kawin" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -201,13 +230,13 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtNIK, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNIK, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                             .addComponent(txtNama, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPekerjaan)
-                            .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                         .addComponent(tglChoser, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,16 +251,19 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                         .addComponent(jLabel7)
                         .addGap(50, 50, 50)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cmb_status, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSimpan)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnHapus))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtStatus)
-                        .addComponent(txtPenghasilan)
-                        .addComponent(txtNoPolis)
-                        .addComponent(cmb_admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnSimpan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHapus))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtPenghasilan)
+                                .addComponent(txtNoPolis)
+                                .addComponent(cmb_admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,7 +273,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel7)
                     .addComponent(txtNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -264,17 +296,16 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                     .addComponent(cmb_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnHapus, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSimpan, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap())
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnSimpan, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnHapus, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -294,24 +325,30 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel11.setText("MASTER NASABAH");
+        jLabel12.setFont(new java.awt.Font("Century", 1, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 128, 33));
+        jLabel12.setText("MANULA");
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/LOGO.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(177, 177, 177)
-                .addComponent(jLabel11)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -323,8 +360,10 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel12))
+                        .addGap(13, 13, 13)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,47 +373,15 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStatusActionPerformed
-
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
-        datas = new ArrayList<>();
-        String kolom = "";
-        switch (cmbNasabah.getSelectedIndex()) {
-            case 0:
-                kolom = "nik";
-                break;
-            case 1:
-                kolom = "nmNasabah";
-                break;
-            case 2:
-                kolom = "pekerjaan";
-                break;
-            case 3:
-                kolom = "status";
-                break;
-            case 4:
-                kolom = "pengBulan";
-                break;
-            case 5:
-                kolom = "noPolis";
-                break;
-            case 6:
-                kolom = "idAdmin";
-                break;
-            default:
-                throw new AssertionError();
-        }
-       datas = nc.bindingsearch(tblNasabah, header, kolom,
-                txtCari.getText());
+
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
          datas = new ArrayList<>();
         boolean hasil = false;
             hasil = nc.save(txtNIK.getText(), txtNama.getText(), tglChoser.getDate().getTime()+"", 
-                    txtPekerjaan.getText(), txtAlamat.getText(), txtStatus.getText(), txtPenghasilan.getText(), 
+                    txtPekerjaan.getText(), txtAlamat.getText(), cmb_status.getSelectedItem().toString(), txtPenghasilan.getText(), 
                     txtNoPolis.getText(), cmb_admin.getSelectedItem().toString(), txtNIK.isEnabled());
 
             
@@ -417,22 +424,14 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         tglChoser.setDate((Date)tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 2));
         txtPekerjaan.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 3)+"");
         txtAlamat.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 4)+"");
-        txtStatus.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 5)+"");
+        cmb_status.setSelectedItem(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 5)+"");
         txtPenghasilan.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 6)+"");
         txtNoPolis.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 7)+"");
-       // txtIDAdmin.setText(tblNasabah.getValueAt(tblNasabah.getSelectedRow(), 8)+"");
           int row = tblNasabah.getSelectedRow();
          cmb_admin.setSelectedItem(getCombo(true).get(row));
          System.out.println(getCombo(true).get(row));
         txtNIK.setEnabled(false);
         txtNama.setEnabled(true);
-        tglChoser.setEnabled(true);
-        txtPekerjaan.setEnabled(true);
-        txtAlamat.setEnabled(true);
-        txtStatus.setEnabled(true);
-        txtPenghasilan.setEnabled(true);
-        txtNoPolis.setEnabled(true);
-      //  txtIDAdmin.setEnabled(true);
         
         btnSimpan.setEnabled(true);
         btnHapus.setEnabled(true);
@@ -444,6 +443,67 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         btnHapus.setEnabled(true);
     }//GEN-LAST:event_txtNIKKeyPressed
 
+    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+         // TODO add your handling code here:
+                 datas = new ArrayList<>();
+        String kolom = "";
+        switch (cmbNasabah.getSelectedIndex()) {
+            case 0:
+                kolom = "nik";
+                break;
+            case 1:
+                kolom = "nmNasabah";
+                break;
+            case 2:
+                kolom = "pekerjaan";
+                break;
+            case 3:
+                kolom = "status";
+                break;
+            case 4:
+                kolom = "pengBulan";
+                break;
+            case 5:
+                kolom = "noPolis";
+                break;
+            case 6:
+                kolom = "idAdmin";
+                break;
+            default:
+                throw new AssertionError();
+        }
+       datas = nc.bindingsearch(tblNasabah, header, kolom,
+                txtCari.getText());
+    }//GEN-LAST:event_txtCariActionPerformed
+
+    private void txtNIKKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNIKKeyTyped
+         // TODO add your handling code here:
+         if(!Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNIKKeyTyped
+
+    private void txtNamaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaKeyTyped
+         // TODO add your handling code here:
+         if(Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNamaKeyTyped
+
+    private void txtPekerjaanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPekerjaanKeyTyped
+         // TODO add your handling code here:
+         if(Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPekerjaanKeyTyped
+
+    private void txtPenghasilanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPenghasilanKeyTyped
+         // TODO add your handling code here:
+         if(!Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPenghasilanKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;
@@ -451,9 +511,11 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSimpan;
     private javax.swing.JComboBox<String> cmbNasabah;
     private javax.swing.JComboBox<String> cmb_admin;
+    private javax.swing.JComboBox<String> cmb_status;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -466,16 +528,16 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblNasabah;
     private com.toedter.calendar.JDateChooser tglChoser;
-    private javax.swing.JTextField txtAlamat;
+    private javax.swing.JTextArea txtAlamat;
     private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtNIK;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNoPolis;
     private javax.swing.JTextField txtPekerjaan;
     private javax.swing.JTextField txtPenghasilan;
-    private javax.swing.JTextField txtStatus;
     // End of variables declaration//GEN-END:variables
 
     public void reset() {
@@ -485,7 +547,7 @@ public class ViewNasabah extends javax.swing.JInternalFrame {
         txtAlamat.setText("");
         txtPekerjaan.setText("");
         txtAlamat.setText("");
-        txtStatus.setText("");
+        cmb_status.setSelectedItem("-");
         txtPenghasilan.setText("");
         txtNoPolis.setText("");
         txtNIK.setEnabled(true);

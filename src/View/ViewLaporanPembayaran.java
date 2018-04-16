@@ -44,36 +44,14 @@ public class ViewLaporanPembayaran extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cmbCari = new javax.swing.JComboBox<>();
         txtCari = new javax.swing.JTextField();
-        btnCari = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblLapPemb = new javax.swing.JTable();
         btn_lapPembayaran = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
 
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Laporan Pembayaran");
-
-        cmbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tanggal", "Kode Asuransi", "Nomer Polis" }));
-
-        btnCari.setText("Cari");
-        btnCari.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCariActionPerformed(evt);
-            }
-        });
-
-        tblLapPemb.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(tblLapPemb);
 
         btn_lapPembayaran.setText("Cetak Laporan");
         btn_lapPembayaran.addActionListener(new java.awt.event.ActionListener() {
@@ -86,64 +64,37 @@ public class ViewLaporanPembayaran extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_lapPembayaran)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmbCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(22, 22, 22))
+                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_lapPembayaran)
+                        .addGap(0, 321, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCari))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_lapPembayaran)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_lapPembayaran))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
-        // TODO add your handling code here:
-        String kolom = "";
-        switch (cmbCari.getSelectedIndex()) {
-            case 0:
-                kolom = "tglPembayaran";
-                break;
-            case 1:
-                kolom = "kodeAsuransi";
-                break;
-            case 2:
-                kolom = "noPolis";
-                break;
-            default:
-                throw new AssertionError();
-        }
-        pc.bindingLaporanPembayaran(tblLapPemb, header, kolom, txtCari.getText());
-
-    }//GEN-LAST:event_btnCariActionPerformed
-
     private void btn_lapPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lapPembayaranActionPerformed
         // TODO add your handling code here:
-        try {
-                String path = "report/ReportPembayaran.jasper";
+        if (txtCari.getText().equals("")) {
+            try {
+                String path = "report/ReportPembayaranWithoutWhere.jasper";
             String driver="oracle.jdbc.OracleDriver";
             String konek="jdbc:oracle:thin:@localhost:1521:XE";
             String user="system";
@@ -152,7 +103,7 @@ public class ViewLaporanPembayaran extends javax.swing.JInternalFrame {
             Class.forName(driver);
             Connection conn = DriverManager.getConnection(konek,user,password);
             File reportFile=new File(path);
-//            parameter.put("", txtCari.getText());
+//            parameter.put("no_polis", txtCari.getText());
             InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
 //            JasperReport jReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
 //            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
@@ -165,21 +116,50 @@ public class ViewLaporanPembayaran extends javax.swing.JInternalFrame {
             JRViewer jViewer = new JRViewer (jp);
             jViewer.setVisible(true);
             jViewer.setOpaque(true);
-            jScrollPane1.add(jViewer);
-            jScrollPane1.setViewportView(jViewer);
+            jScrollPane2.add(jViewer);
+            jScrollPane2.setViewportView(jViewer);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage()
                 ,"Cetak Laporan", JOptionPane.ERROR_MESSAGE);
         }
+        }else{
+        try {
+                String path = "report/ReportPembayaran.jasper";
+            String driver="oracle.jdbc.OracleDriver";
+            String konek="jdbc:oracle:thin:@localhost:1521:XE";
+            String user="system";
+            String password="root";
+            HashMap parameter = new HashMap();
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(konek,user,password);
+            File reportFile=new File(path);
+            parameter.put("no_polis", txtCari.getText());
+            InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
+//            JasperReport jReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+//            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
+            JasperPrint jp = JasperFillManager.fillReport(jReport, parameter, conn);
+//            JasperViewer.viewReport(jPrint, true);
+//            JasperViewer viewer = new JasperViewer(jPrint);
+//            JasperViewer.setDefaultLookAndFeelDecorated(true);
+//            cr.add(viewer);
+//            cr.show();
+            JRViewer jViewer = new JRViewer (jp);
+            jViewer.setVisible(true);
+            jViewer.setOpaque(true);
+            jScrollPane2.add(jViewer);
+            jScrollPane2.setViewportView(jViewer);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage()
+                ,"Cetak Laporan", JOptionPane.ERROR_MESSAGE);
+        }    
+        }
+        
     }//GEN-LAST:event_btn_lapPembayaranActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCari;
     private javax.swing.JButton btn_lapPembayaran;
-    private javax.swing.JComboBox<String> cmbCari;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblLapPemb;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField txtCari;
     // End of variables declaration//GEN-END:variables
 }
